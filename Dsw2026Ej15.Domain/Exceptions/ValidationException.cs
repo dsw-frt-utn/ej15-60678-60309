@@ -4,7 +4,11 @@ using System.Text;
 
 namespace Dsw2026Ej15.Domain.Exceptions
 {
-    internal class ValidationException
+    public class ValidationException : Exception
     {
+        public ValidationException(string msg) : base(msg)
+        {
+
+        }
     }
 }
