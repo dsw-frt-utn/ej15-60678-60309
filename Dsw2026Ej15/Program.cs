@@ -1,7 +1,7 @@
 using Dsw2026Ej15.Api.Middlewares;
 using Dsw2026Ej15.Data.Sources;
 using Dsw2026Ej15.Domain.Interfaces;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Dsw2026Ej15
 {
@@ -21,7 +21,12 @@ namespace Dsw2026Ej15
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddSingleton<IPersistence, PersistenceInMemory>();
+            //builder.Services.AddSingleton<IPersistence, PersistenceInMemory>(); //Usabamos antes cuando era Singleton
+
+            //Parte nueva para BD
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<IPersistence, PersistenceEf>();
+
 
             var app = builder.Build();
 
